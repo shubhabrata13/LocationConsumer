@@ -1,0 +1,16 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: C001
+      author: SDE
+      runAlways: false
+      failOnError: true
+      runOnChange: true
+      context: prod
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: sqlScripts/CREATE_TABLES.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
