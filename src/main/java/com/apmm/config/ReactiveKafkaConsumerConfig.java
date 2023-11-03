@@ -36,6 +36,9 @@ public class ReactiveKafkaConsumerConfig {
     @Value("${spring.kafka.properties.security.protocol}")
     private String security_protocol;
 
+    @Value("${spring.kafka.producer.GROUP_ID_CONFIG}")
+    private String GROUP_ID_CONFIG;
+
     /*@Bean
     public ReactiveKafkaProducerTemplate<String, Location> reactiveKafkaProducerTemplate(
             KafkaProperties properties) {
@@ -59,7 +62,7 @@ public class ReactiveKafkaConsumerConfig {
         config.put(SaslConfigs.SASL_MECHANISM,sasl_mechanism);
         config.put(SaslConfigs.SASL_JAAS_CONFIG,jaas_config);
         config.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,security_protocol);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "groupId");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID_CONFIG);
         config.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         config.put(JsonDeserializer.TRUSTED_PACKAGES,"*");
         config.put(JsonDeserializer.VALUE_DEFAULT_TYPE,"com.apmm.domain.Location");

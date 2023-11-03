@@ -16,21 +16,21 @@ spec:
         - name: consumer
           image: cloudpoc.azurecr.io/consumer:v1
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
 ---
-kind: Service
-apiVersion: v1
-metadata:
+#kind: Service
+#apiVersion: v1
+#metadata:
   # Name of our service
-  name: cloud-poc-service
-spec:
+  #name: cloud-poc-service-producer
+#spec:
   # LoadBalancer type to allow external access to multiple ports
-  type: LoadBalancer
-  selector:
+  #type: LoadBalancer
+  #selector:
     # Will deliver external traffic to the pod holding each of our containers
-    app: consumer
-  ports:
+    #app: consumer
+  #ports:
     #- name: sentiment
       #protocol: TCP
-     - port: 8081
+     #- port: 8082
       #targetPort: containerport
