@@ -39,24 +39,11 @@ public class ReactiveKafkaConsumerConfig {
     @Value("${spring.kafka.producer.GROUP_ID_CONFIG}")
     private String GROUP_ID_CONFIG;
 
-    /*@Bean
-    public ReactiveKafkaProducerTemplate<String, Location> reactiveKafkaProducerTemplate(
-            KafkaProperties properties) {
-
-        return new ReactiveKafkaProducerTemplate<String, Location>(SenderOptions.create(Map.of(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-                ProducerConfig.RETRIES_CONFIG, 0,
-                ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432,
-                SaslConfigs.SASL_MECHANISM, sasl_mechanism,
-                SaslConfigs.SASL_JAAS_CONFIG, jaas_config,
-                CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, security_protocol,
-                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class
-        )));
-    }*/
+    @Value(value = "${consumer.topic.name}")
+    String topic;
 
     @Bean
-    public ReceiverOptions<String, String> kafkaReceiverOptions(@Value(value = "locationref.topic.internal.any.v1") String topic,
-                                                                KafkaProperties kafkaProperties) {
+    public ReceiverOptions<String, String> kafkaReceiverOptions(KafkaProperties kafkaProperties) {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(SaslConfigs.SASL_MECHANISM,sasl_mechanism);
@@ -68,14 +55,6 @@ public class ReactiveKafkaConsumerConfig {
         config.put(JsonDeserializer.VALUE_DEFAULT_TYPE,"com.apmm.domain.Location");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        /*config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "hksharma");
-        config.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
-        config.put(JsonDeserializer.TRUSTED_PACKAGES,"*");
-        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE,"com.apmm.domain.VesselDetails");
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);*/
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         ReceiverOptions<String, String> basicReceiverOptions = ReceiverOptions.create(config);
